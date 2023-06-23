@@ -16,21 +16,26 @@
  */
 
 apply from: rootProject.file('dependencies.gradle')
-
-subprojects { Project subproject ->
-    buildscript {
-        repositories {
-            jcenter()
-            google()
-            maven { url 'https://maven.fabric.io/public' }
-        }
-        dependencies {
-            classpath dependency.androidGradlePlugin
-        }
-    }
-
+buildscript {
+    ext.kotlin_version = "1.6.10"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        maven { url "https://jitpack.io" }
+        mavenCentral()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
 }
